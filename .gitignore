@@ -36,6 +36,7 @@ build/Release
 redux-routing-1/node_modules/
 post/node_modules/
 redux-redux-login/node_modules/
+Shoping-Cart/node_modules/
 
 jspm_packages/
 
