@@ -5,10 +5,10 @@ import "./SignUp.css"
 
 const SIGN_UP = 'SIGN_UP';
 
-const signUp= (data)=>{
+function signUp(data){
     return{
         type: SIGN_UP,
-        data
+        payload:data
     }
 }
 
@@ -61,7 +61,7 @@ class SignUp extends Component{
   //       data.append('profile_pic',this.uploadInput.files[0]);
   //       data.append('time',Date.now());
 		// console.log("jjjjj")
-		console.log("Submit: ",this.state)
+		//console.log("Submit: ",this.state)
 	}
 
 	render(){
