@@ -1,4 +1,5 @@
-let mongoose = require('mongoose');
+// let mongoose = require('mongoose');
+import mongoose from "mongoose"
 
 const server = '127.0.0.1:27017'; // REPLACE WITH YOUR DB SERVER
 const database = 'website_Redux';      // REPLACE WITH YOUR DB NAME
