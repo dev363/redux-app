@@ -38,7 +38,8 @@ post/node_modules/
 redux-redux-login/node_modules/
 redux-routing-1/node_modules/
 Shoping-Cart/node_modules/
-website/node_modules/
+website/node_modules/*
+react-redux-login/node_modules/
 
 jspm_packages/
 

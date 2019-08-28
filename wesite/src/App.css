@@ -22,3 +22,28 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.message {
+    text-align: center;
+}
+
+.message > img {
+    height: 67px;
+    width: 100px;
+}
+.success,.error {
+    font-size: larger;
+    font-weight: 600;
+}
+.success{
+  color: green;
+}
+.error{
+  color: red;
+}
+.server-error {
+    background: red;
+    color: white;
+    padding: 5px;
+    justify-content: center;
+}

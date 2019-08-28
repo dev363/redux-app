@@ -1,20 +1,52 @@
-// import { ADD_TO_CART,REMOVE_ITEM,SUB_QUANTITY,ADD_QUANTITY,ADD_SHIPPING } from '../actions/action-types/cart-actions'
-// import { findByUsername, findById, login,test} from "../services/user"
+import Axios from "axios"
 
 const initState = {
-    loading:false,
+    isSignUpPending:false,
+    isSignUpSuccess:null,
+    isSignUpError:null,
+    isLoginPending:false,
+    isLoginSuccess:null,
+    isLoginError:null,
     data:{}
 
 }
 
 const SignupReducer= (state = initState,{type,payload})=>{
-	if(type==="SIGN_UP"){
-		console.log(type)
-		console.log("type")
-		console.log(payload)
-		return state
-	}else{
-		return state
+	switch (type) {
+      /** Return Signup status */
+
+      	case 'SET_LOADING': {
+
+			return {
+	          ...state,
+	          isSignUpPending:payload
+	        }
+
+	    }
+
+	    case 'SIGN_UP': {
+
+			return {
+	          ...state,
+	          isSignUpPending:false,
+	          isSignUpSuccess: (payload.status===200) ? "User Signup successfully." : null,
+	          isSignUpError: (payload.status===404) ? payload.message : null,
+	        }
+
+	    }
+
+	    case 'Server_Error': {
+
+			return {
+	          ...state,
+	          isSignUpPending:false,
+	          isServerError:true
+	        }
+
+	    }
+
+	    default:
+        	return state;
 	}
     
 }

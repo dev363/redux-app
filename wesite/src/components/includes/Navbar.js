@@ -1,10 +1,26 @@
 import React,{Component} from "react"
+import { connect } from 'react-redux'
 import {Link} from "react-router-dom"
 
 class Navbar extends Component{
+	componentWillMount() {
+		console.log("HHHHHHHHHH")
+		this.props.dispatch(
+			 {
+			        type: 'Check_Server'
+			    }
+			)
+		console.log(this.props)
+		
+	}
 	render(){
+		// console.log(this.props.isServerError);
 		return(
 			<div>
+			{ 
+			(this.props.isServerError) &&
+				<div className="row server-error">Server on maintenance mode. Please try after sometime.</div>
+			}
 			<nav className="navbar navbar-expand-lg navbar-light bg-light">
 				<Link className="navbar-brand" to="/">Navbar</Link>
 		          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,5 +50,12 @@ class Navbar extends Component{
 		)
 	}
 }
+const mapStateToProps = (state)=>{
+	console.log("hello i am here")
+	console.log(state.Common)
+	return {
+	    isServerError: state.Common.isServerError
+	};
+}
 
-export default Navbar;
+export default connect(mapStateToProps)(Navbar)

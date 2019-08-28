@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Axios from "axios"
 import { login } from '../../redux/reducer';
 import './LoginForm.css';
 
@@ -7,9 +8,11 @@ class LoginForm extends Component {
 
   constructor(props) {
     super(props);
+    console.log("In to constructor")
     this.state = {};
     this.onSubmit = this.onSubmit.bind(this);
   }
+  
 
   render() {
     let {email, password} = this.state;
