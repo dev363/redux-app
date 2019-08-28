@@ -1,4 +1,4 @@
-import Axios from "axios"
+import {SET_LOADING,SIGN_UP,SIGN_IN} from "../config"
 
 const initState = {
     isSignUpPending:false,
@@ -8,47 +8,40 @@ const initState = {
     isLoginSuccess:null,
     isLoginError:null,
     data:{}
-
 }
 
 const SignupReducer= (state = initState,{type,payload})=>{
 	switch (type) {
-      /** Return Signup status */
-
-      	case 'SET_LOADING': {
-
-			return {
+      case SET_LOADING: {
+		      return {
 	          ...state,
-	          isSignUpPending:payload
+	          [payload.key]:payload.state
 	        }
-
+	    }
+	    case SIGN_UP: {
+			     return {
+  	          ...state,
+  	          isSignUpPending:false,
+  	          isSignUpSuccess: (payload.status===200) ? "User Signup successfully." : null,
+  	          isSignUpError: (payload.status===404) ? payload.message : null,
+              data:payload.data
+	         }
 	    }
 
-	    case 'SIGN_UP': {
-
-			return {
+      case SIGN_IN: {
+			    return {
 	          ...state,
-	          isSignUpPending:false,
-	          isSignUpSuccess: (payload.status===200) ? "User Signup successfully." : null,
-	          isSignUpError: (payload.status===404) ? payload.message : null,
+	          isLoginPending:false,
+	          isLoginSuccess: (payload.status===200) ? "User Login successfully." : null,
+	          isLoginError: (payload.status===404) ? payload.message : null,
+            data:payload.data
 	        }
-
 	    }
-
-	    case 'Server_Error': {
-
-			return {
-	          ...state,
-	          isSignUpPending:false,
-	          isServerError:true
-	        }
-
-	    }
-
-	    default:
-        	return state;
+	    default:{
+        return state;
+      }
 	}
-    
+
 }
 
 export default SignupReducer

@@ -11,7 +11,7 @@ const fileRoute= "/var/www/html/node/Redux/redux-app/wesite/node-curd-app/upload
 router.get("/", (req, res, next) => {
     res.status(200).json({
         message:"Serving Users on the Endpoint."
-    });   
+    });
 });
 
 router.get("/list", (req, res, next) => {
@@ -28,23 +28,27 @@ router.get("/list", (req, res, next) => {
 });
 
 // Add new user
-router.post("/add", (req, res, next) => {
+router.post("/sign-up", (req, res, next) => {
     const body= req.body;
-
+    // console.log(body)
     Users_model.checkIsAval({email: body.email},(result,err) => {
-
         if(err) throw (err);
         if(result === false){
-
             Users_model.save(body, (result,err) => {
                 res.json(result);
             });
-
         }else{
             res.json({status:404,message:"Useremail is already available."});
         }
     })
+});
 
+// login user
+router.post("/sign-in", (req, res, next) => {
+    const body= req.body;
+    Users_model.getResults(body, (result,err) => {
+        res.json(result);
+    });
 });
 
 router.post("/delete", (req, res, next) => {

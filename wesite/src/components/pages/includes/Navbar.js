@@ -1,23 +1,32 @@
 import React,{Component} from "react"
 import { connect } from 'react-redux'
 import {Link} from "react-router-dom"
+import {API_BASE_URL} from "../../config"
+import Axios from "axios"
+
+const CheckServer = () => {
+	return new Promise((resolve, revoke)=>{
+		Axios.get(API_BASE_URL)
+			.then(res=> {
+				resolve(false)
+			})
+			.catch(err=>{
+				resolve(true)
+			})
+		})
+}
 
 class Navbar extends Component{
-	componentWillMount() {
-		console.log("HHHHHHHHHH")
-		this.props.dispatch(
-			 {
-			        type: 'Check_Server'
-			    }
-			)
-		console.log(this.props)
-		
+
+	async componentWillMount() {
+		let response = await CheckServer();
+		this.props.CheckServer(response);
 	}
+
 	render(){
-		// console.log(this.props.isServerError);
 		return(
 			<div>
-			{ 
+			{
 			(this.props.isServerError) &&
 				<div className="row server-error">Server on maintenance mode. Please try after sometime.</div>
 			}
@@ -41,9 +50,9 @@ class Navbar extends Component{
 		               <li className="nav-item">
 		                <Link className="nav-link" to="/sign-up">Sign Up</Link>
 		              </li>
-		              
+
 		            </ul>
-		            
+
 		          </div>
 	        </nav>
 	        </div>
@@ -51,11 +60,19 @@ class Navbar extends Component{
 	}
 }
 const mapStateToProps = (state)=>{
-	console.log("hello i am here")
-	console.log(state.Common)
+
 	return {
 	    isServerError: state.Common.isServerError
 	};
 }
 
-export default connect(mapStateToProps)(Navbar)
+const mapDispatchToProps =  (dispatch)=>{
+   return{
+        CheckServer: (data) => {dispatch({
+ 					type: 'Check_Server',
+					payload:data
+ 				})}
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Navbar)

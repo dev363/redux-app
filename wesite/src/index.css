@@ -3,3 +3,7 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+p.links {
+    text-align: center;
+    margin-top: 15px;
+}

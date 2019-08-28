@@ -5,7 +5,8 @@ import randomstring from 'randomstring';
 import {fileRoute} from '../config/config';
 
 module.exports = class Users_model{
-  
+
+  // Check User already available or not
    checkIsAval(data,cb){
 		User.find(data)
 	    .exec()
@@ -21,7 +22,24 @@ module.exports = class Users_model{
 	    });
 	}
 
-	async save(data,cb){
+  // Get user's results
+  getResults(data,cb){
+   User.find(data)
+     .exec()
+     .then(records =>{
+       if(records.length !== 0){
+           return cb({status:200,data:records})
+       }else{
+           return cb({status:404,message:"wrong details."});
+       }
+     })
+     .catch(err => {
+         return cb({status:404,message:"wrong details."});
+     });
+ }
+
+ // Add new user
+ async save(data,cb){
 		let profilePic;
 		await this.uploadProfilePic(data.profile_pic_url).then(res=>{profilePic=res}) // save profile picture
 		const user = new User({
@@ -32,10 +50,10 @@ module.exports = class Users_model{
 	        profilePic: profilePic,
 	        password:data.password
 	    });
-	    
+
 	    user.save()
 	    .then(result => {
-	        return cb({status:200,data:user})
+	        return cb({status:200,data:user[0]})
 	    })
 	    .catch(err => {
 	        return cb({status:404,message:"User not saved."});
@@ -43,6 +61,7 @@ module.exports = class Users_model{
 
 	}
 
+  // save image's files
 	uploadProfilePic(base64url){
 		return new Promise(function(resolve, reject) {
 			let base64Image = (base64url).split(';base64,').pop();
@@ -53,5 +72,5 @@ module.exports = class Users_model{
 		    })
     	});
 	}
-   
+
 }

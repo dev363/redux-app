@@ -14,6 +14,6 @@ const middleware = composeWithDevTools(applyMiddleware(promise, thunk));
 const store= createStore(AllReducer, middleware);
 
 ReactDOM.render(
-	<Provider store={store} > <App /></Provider>,
+	<Provider store={store} > <App store={store}/></Provider>,
   document.getElementById('root')
 );
